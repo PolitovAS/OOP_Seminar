@@ -7,9 +7,11 @@ public class VendingMachine {
     private int volume;
     private List<Product> products;
     private List<String> workLog;
+    private Double money;
+    
 
     /**
-     * конструктор продукта 2 параметра
+     * Конструктор с новым параметром
      * @param volume объем бутылки
      */
     public VendingMachine(int volume){
@@ -17,6 +19,7 @@ public class VendingMachine {
         products = new ArrayList<Product>();
         workLog = new ArrayList<String>();
     }
+    
     public void addProduct(Product prod)
     {
         products.add(prod);
@@ -27,7 +30,7 @@ public class VendingMachine {
         workLog.add(line);
     }
     
-    public Product gerProdByName(String name){
+    public Product getProdByName(String name){
         for (Product product : products) {
             if (product.getName().contains(name)){
                 return product;
@@ -39,5 +42,15 @@ public class VendingMachine {
 
     public List<Product> getProductAll(){
         return products;
+    }
+
+    public String buy(Product product, Double money) {
+        if (money >= product.getPrice()) {
+            Double change = money - product.getPrice();
+            money = 0.0;
+            return "Вы успешно купили " + product.getName() + ". Ваша сдача: " + change + " руб.";
+        } else {
+            return "У вас недостаточно денег для покупки.";
+        }
     }
 }
